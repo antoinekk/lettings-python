@@ -4,7 +4,7 @@ from .models import Letting
 def index(request):
     lettings_list = Letting.objects.all()
     context = {'lettings_list': lettings_list}
-    return render(request, 'lettings_index.html', context)
+    return render(request, 'lettings/index.html', context)
 
 # Cras ultricies dignissim purus, vitae hendrerit ex varius non.
 # In accumsan porta nisl id eleifend.
@@ -28,7 +28,7 @@ def letting(request, letting_id):
         'title': letting.title,
         'address': letting.address,
     }
-    return render(request, 'letting.html', context)
+    return render(request, 'lettings/letting.html', context)
 
 # Sed placerat quam in pulvinar commodo.
 # Nullam laoreet consectetur ex, sed consequat libero pulvinar eget. Fusc
