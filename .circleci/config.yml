@@ -15,6 +15,7 @@ jobs:
       - image: cimg/python:3.11.2
     steps:
       - checkout
+      - setup_remote_docker
       - run: echo "$DOCKER_TOKEN" | docker login -u="${DOCKER_USER}" --password-stdin
       - run: docker build --tag ${DOCKER_USER}/${CIRCLE_PROJECT}:${CIRCLE_SHA1} .
       - run: docker push ${DOCKER_USER}/${CIRCLE_PROJECT}:${CIRCLE_SHA1}
