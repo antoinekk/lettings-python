@@ -1,0 +1,32 @@
+version: 2.1
+
+jobs:
+  build-test:
+    docker:
+      - image: cimg/python:3.11.2
+    steps:
+      - checkout
+      - run: python3 -m venv venv
+      - run: source venv/bin/activate && pip install -r requirements.txt && pip install six
+      - run: source venv/bin/activate && flake8
+      - run: source venv/bin/activate && pytest
+  dockerhub:
+    docker:
+      - image: cimg/python:3.11.2
+    steps:
+      - checkout
+      - run: docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+      - run: docker build --tag ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1} .
+      - run: docker push ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
+
+workflows:
+  main:
+    jobs:
+      - build-test
+      - dockerhub:
+          requires:
+            - build-test
+          filters:
+            branches:
+              only:
+                - master
