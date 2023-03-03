@@ -15,9 +15,9 @@ jobs:
       - image: cimg/python:3.11.2
     steps:
       - checkout
-      - run: docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
-      - run: docker build --tag ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1} .
-      - run: docker push ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}
+      - run: echo "$DOCKER_TOKEN" | docker login -u="${DOCKER_USER}" --password-stdin
+      - run: docker build --tag ${DOCKER_USER}/${CIRCLE_PROJECT}:${CIRCLE_SHA1} .
+      - run: docker push ${DOCKER_USER}/${CIRCLE_PROJECT}:${CIRCLE_SHA1}
 
 workflows:
   main:
