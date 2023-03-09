@@ -1,10 +1,14 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.http import HttpResponse
 
 
 def trigger_error(request):
-    division_by_zero = 1 / 0
-    return division_by_zero
+    try:
+        division_by_zero = 1 / 0
+    except Exception:
+        division_by_zero = "Hello World"
+    return HttpResponse(division_by_zero)
 
 
 urlpatterns = [
