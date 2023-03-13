@@ -75,3 +75,51 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+
+## Docker
+
+### Lancement de l'application en local via l'image Docker
+- Télécharger et installer [Docker](https://docs.docker.com/get-docker/)
+- Rejoindre le repository Docker : https://hub.docker.com/r/antoinemx/lettings-python/tags
+- Choisissez le <tag> le plus récent
+- Utiliser la commande `docker run --rm -p 8000:8000 antoinemx/lettings-python:<tag>`
+
+Vous pouvez accéder à l'application dans votre navigateur via l'url http://localhost:8000
+
+## Déploiement
+
+### Prérequis
+Afin de déployer l'application via le pipeleine CircleCI et Heroku, vous devez créer des comptes pour tous les outils suivants:
+
+- [GitHub](https://github.com/)
+- [CircleCI](https://circleci.com) (via le compte GitHub)
+- [Docker](https://www.docker.com)
+- [Heroku](https://www.heroku.com)
+
+### Configuration
+
+#### CircleCI
+
+Initialiser un projet sur CircleCI via *"Set Up Project"*. 
+Sélectionner la branche *master* comme source pour le fichier *.circleci/config.yml*.
+
+Pour faire fonctionner le pipeline CircleCI, il est nécessaire de préciser des variables d'environnement (*Project Settings* > *Environment Variables*) :
+
+| Variable CircleCI | Description                                                                                                                                                                                                               |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CIRCLE_PROJECT    | Nom du projet CircleCI                                                                                                                                                                                                    |
+| DOCKER_TOKEN      | Mot de passe Docker                                                                                                                                                			    |
+| DOCKER_USER       | Nom d'utilisateur Docker                                                                                                                                                                                  |
+| HEROKU_API_KEY    | Clé API de l'application créée via Heroku                                                                                                                                                |
+| HEROKU_APP_NAME   | Nom de l'application Heroku : l'application déployée sera accessible via `https://<HEROKU_APP_NAME>.herokuapp.com/`                                                                                                       |
+
+#### Docker
+
+Créer un repository sur DockerHub. Le nom du repository doit correspondre à la variable *CIRCLE_PROJECT* créée pour CircleCI
+
+#### Heroku
+
+Pour créer une application avec votre compte Heroku:
+
+Créer manuellement l'application sur le site. Le nom de l'application doit correspondre à la variable *HEROKU_APP_NAME* créée pour CircleCI
