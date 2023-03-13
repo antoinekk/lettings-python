@@ -82,7 +82,7 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 ### Lancement de l'application en local via l'image Docker
 - Télécharger et installer [Docker](https://docs.docker.com/get-docker/)
 - Rejoindre le repository Docker : https://hub.docker.com/r/antoinemx/lettings-python/tags
-- Choisissez le <tag> le plus récent
+- Choisissez le tag le plus récent
 - Utiliser la commande `docker run --rm -p 8000:8000 antoinemx/lettings-python:<tag>`
 
 Vous pouvez accéder à l'application dans votre navigateur via l'url http://localhost:8000
